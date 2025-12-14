@@ -1,7 +1,5 @@
 from fastapi import FastAPI
+from api.directions import router as directions_router
 
 app = FastAPI()
-
-@app.get("/")
-def home():
-    return {"message": "Hello World"}
+app.include_router(directions_router)
