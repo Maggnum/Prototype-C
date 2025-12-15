@@ -2,6 +2,7 @@ import type { LatLng, LatLngExpression } from "leaflet";
 import { useCallback, useEffect, useState } from "react";
 import { fetchRoute } from "../../services";
 import { toast } from "react-toastify";
+import axios, { AxiosError, HttpStatusCode } from "axios";
 
 type RouteRequest = {
   origin: LatLng;
@@ -39,7 +40,24 @@ export const useRouting = () => {
           {
             pending: "Finding route...",
             success: "Route found!",
-            error: "Error: ",
+            error: {
+              render({ data }) {
+                if (axios.isAxiosError(data)) {
+                  switch (data.response?.status) {
+                    case HttpStatusCode.NotFound:
+                      return "Route not found";
+                    case HttpStatusCode.BadRequest:
+                      return "Invalid user input";
+                    case HttpStatusCode.InternalServerError:
+                      return "Unexpected server error";
+                    default:
+                      return "Routing failed";
+                  }
+                }
+
+                return "Unexpected error";
+              },
+            },
           },
           { position: "bottom-right" }
         );
@@ -47,10 +65,18 @@ export const useRouting = () => {
         const result = await routePromise;
 
         setPolyline(result);
-        setLoading(false);
       } catch (error) {
-        console.error("Failed to fetch route", error);
+        if (error instanceof AxiosError) {
+          console.error(
+            error.response?.status,
+            error.response?.data?.detail?.code,
+            error.response?.data?.detail?.message
+          );
+        } else {
+          console.error("Failed to fetch route", error);
+        }
         setPolyline([]);
+      } finally {
         setLoading(false);
       }
     };
