@@ -8,7 +8,7 @@ import { CustomMarker } from "../Marker/marker";
 import { useRouting } from "./useRouting";
 import { Button, type SxProps } from "@mui/material";
 
-const ISRAEL_COORDINATES: LatLngExpression = { lat: 31.4061, lng: 34.8516 };
+const ISRAEL_COORDINATES: LatLngExpression = { lat: 31.35, lng: 36.1216 };
 const MAP_ZOOM = 8;
 
 const PATH_OPTIONS: PathOptions = {
@@ -40,10 +40,7 @@ export const MapView: FC = () => {
 
   return (
     <MapContainer center={ISRAEL_COORDINATES} zoom={MAP_ZOOM}>
-      <TileLayer
-        attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-      />
+      <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
       <CustomMarker
         title="origin"
         position={origin}
