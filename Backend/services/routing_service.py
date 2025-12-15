@@ -8,16 +8,14 @@ from models.schemas import DirectionsRequest, DirectionsResponse
 client = openrouteservice.Client(key=settings.ORS_API_KEY)
 
 def get_route(req: DirectionsRequest) -> DirectionsResponse:
-    try:
-        coordinates = (
-            req.origin.to_lng_lat(),
-            req.destination.to_lng_lat(),
-        )
+    coordinates = (
+        req.origin.to_lng_lat(),
+        req.destination.to_lng_lat(),
+    )
 
-        geometry = directions(client, coordinates)["routes"][0]["geometry"]
-        decoded = convert.decode_polyline(geometry)
-        polyline = [[lat, lng] for lng, lat in decoded["coordinates"]] # convert LngLat to LatLng
+    geometry = directions(client, coordinates)["routes"][0]["geometry"]
+    decoded = convert.decode_polyline(geometry)
+    polyline = [[lat, lng] for lng, lat in decoded["coordinates"]] # convert LngLat to LatLng
 
-        return DirectionsResponse(polyline=polyline)
-    except KeyError:
-        raise Exception("KeyError")
+    return DirectionsResponse(polyline=polyline)
+
