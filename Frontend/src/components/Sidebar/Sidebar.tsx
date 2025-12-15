@@ -9,7 +9,8 @@ import {
   type SxProps,
 } from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import type { FC } from "react";
+import { type FC } from "react";
+import { MapUrl } from "./MapUrl";
 
 const drawerStyle: SxProps = {
   width: "18vw",
@@ -44,10 +45,7 @@ export const Sidebar: FC = () => {
               <Typography fontWeight={500}>Map URL</Typography>
             </AccordionSummary>
             <AccordionDetails>
-              {/* Placeholder */}
-              <Typography variant="body2" color="text.secondary">
-                Map source configuration
-              </Typography>
+              <MapUrl />
             </AccordionDetails>
           </Accordion>
         </Box>
