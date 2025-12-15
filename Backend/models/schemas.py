@@ -5,12 +5,13 @@ class LatLng(BaseModel):
     lat: float
     lng: float
 
-    def to_coordinates(self) -> Tuple[float, float]:
-        return self.lat, self.lng
+    def to_lng_lat(self) -> Tuple[float, float]:
+        return self.lng, self.lat #openrouteservice uses LngLat
 
 class DirectionsRequest(BaseModel):
     origin: LatLng
     destination: LatLng
 
-class Polyline(BaseModel):
-    coordinates: List[List[float]]
+class DirectionsResponse(BaseModel):
+    polyline: List[List[float]]
+    message: str

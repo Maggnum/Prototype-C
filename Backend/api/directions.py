@@ -1,9 +1,12 @@
-from fastapi import APIRouter
-from models.schemas import DirectionsRequest, Polyline
+from fastapi import APIRouter, HTTPException
+from models.schemas import DirectionsRequest, DirectionsResponse
 from services.routing_service import get_route
 
 router = APIRouter()
 
-@router.get("/directions", response_model=Polyline)
+@router.post("/directions", response_model=DirectionsResponse)
 def directions_endpoint(req: DirectionsRequest):
-    return get_route(req)
+    try:
+        return get_route(req)
+    except Exception as e:
+        return DirectionsResponse(polyline=[], message=str(e))
