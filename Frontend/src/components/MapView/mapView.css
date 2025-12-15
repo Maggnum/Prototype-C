@@ -4,3 +4,11 @@
   border-radius: 2rem;
   margin: auto;
 }
+
+.route-button {
+  position: absolute;
+  top: 92%;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1000;
+}
