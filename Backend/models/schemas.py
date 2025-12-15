@@ -14,4 +14,3 @@ class DirectionsRequest(BaseModel):
 
 class DirectionsResponse(BaseModel):
     polyline: List[List[float]]
-    message: str

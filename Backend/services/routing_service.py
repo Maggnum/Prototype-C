@@ -18,6 +18,6 @@ def get_route(req: DirectionsRequest) -> DirectionsResponse:
         decoded = convert.decode_polyline(geometry)
         polyline = [[lat, lng] for lng, lat in decoded["coordinates"]] # convert LngLat to LatLng
 
-        return DirectionsResponse(polyline=polyline, message="got route successfully")
+        return DirectionsResponse(polyline=polyline)
     except KeyError:
         raise Exception("KeyError")
