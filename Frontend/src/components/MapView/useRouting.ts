@@ -1,6 +1,7 @@
 import type { LatLng, LatLngExpression } from "leaflet";
 import { useCallback, useEffect, useState } from "react";
 import { fetchRoute } from "../../services";
+import { toast } from "react-toastify";
 
 type RouteRequest = {
   origin: LatLng;
@@ -28,10 +29,23 @@ export const useRouting = () => {
 
     const fetchAndSetRoute = async () => {
       try {
-        const result = await fetchRoute(
+        const routePromise = fetchRoute(
           routeRequest.origin,
           routeRequest.destination
         );
+
+        toast.promise(
+          routePromise,
+          {
+            pending: "Finding route...",
+            success: "Route found!",
+            error: "Error: ",
+          },
+          { position: "bottom-right" }
+        );
+
+        const result = await routePromise;
+
         setPolyline(result);
         setLoading(false);
       } catch (error) {
