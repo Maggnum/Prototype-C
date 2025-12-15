@@ -1,19 +1,22 @@
 import { LatLng, Marker as MarkerType } from "leaflet";
-import { useMemo, useRef, useState, type FC } from "react";
+import { useMemo, useRef, type FC } from "react";
 import { Marker, Popup } from "react-leaflet";
 import "leaflet.utm";
 import "./marker.css";
 
 interface CustomMarkerProps {
   title: string;
-  initialPosition: LatLng;
+  position: LatLng;
+  setPosition: React.Dispatch<React.SetStateAction<LatLng>>;
+  onDrag?: () => void;
 }
 
 export const CustomMarker: FC<CustomMarkerProps> = ({
   title,
-  initialPosition,
+  position,
+  setPosition,
+  onDrag,
 }) => {
-  const [position, setPosition] = useState<LatLng>(initialPosition);
   const markerRef = useRef(null);
 
   const eventHandlers = useMemo(
@@ -23,9 +26,11 @@ export const CustomMarker: FC<CustomMarkerProps> = ({
         if (marker != null) {
           setPosition((marker as MarkerType).getLatLng());
         }
+
+        onDrag?.();
       },
     }),
-    []
+    [setPosition, onDrag]
   );
 
   return (
