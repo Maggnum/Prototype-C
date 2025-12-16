@@ -12,7 +12,7 @@ import {
 } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import { useSetAtom } from "jotai";
-import { chosenUrl } from "@/states";
+import { chosenUrlAtom } from "@/states";
 import { ScrollingText } from "@/components/Common";
 import mapProviders from "@/config/mapProviders.json";
 
@@ -34,7 +34,7 @@ const radioStyle: SxProps = {
 };
 
 export const MapUrl: FC = () => {
-  const setChosenUrl = useSetAtom(chosenUrl);
+  const setChosenUrl = useSetAtom(chosenUrlAtom);
   const [sources, setSources] = useState<MapSource[]>(mapProviders);
   const [name, setName] = useState("");
   const [url, setUrl] = useState("");

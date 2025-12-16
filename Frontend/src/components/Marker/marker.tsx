@@ -27,12 +27,11 @@ export const CustomMarker: FC<CustomMarkerProps> = ({
   const eventHandlers = useMemo(
     () => ({
       dragend() {
+        onDrag?.();
         const marker = markerRef.current;
         if (marker != null) {
           setPosition((marker as MarkerType).getLatLng());
         }
-
-        onDrag?.();
       },
     }),
     [setPosition, onDrag]
