@@ -4,7 +4,7 @@ import "leaflet/dist/leaflet.css";
 import { useState, type FC } from "react";
 import { LatLng, type LatLngExpression, type PathOptions } from "leaflet";
 import { MapContainer, Polyline, TileLayer } from "react-leaflet";
-import { Button, type SxProps } from "@mui/material";
+import { Button, useTheme, type SxProps } from "@mui/material";
 import { useAtomValue } from "jotai";
 
 import { CustomMarker } from "@/components/Marker";
@@ -13,10 +13,6 @@ import { useRouting } from "./useRouting";
 
 const ISRAEL_COORDINATES: LatLngExpression = { lat: 31.4, lng: 35.8216 };
 const MAP_ZOOM = 8;
-
-const PATH_OPTIONS: PathOptions = {
-  color: "blue",
-};
 
 const buttonStyle: SxProps = {
   textTransform: "none",
@@ -41,6 +37,11 @@ export const Map: FC = () => {
 
   const { polyline, clearRoute, route, loading } = useRouting();
   const mapUrl = useAtomValue(chosenUrl);
+  const { palette } = useTheme();
+
+  const PATH_OPTIONS: PathOptions = {
+    color: palette.primary.main,
+  };
 
   return (
     <MapContainer center={ISRAEL_COORDINATES} zoom={MAP_ZOOM}>
