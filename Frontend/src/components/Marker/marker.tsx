@@ -1,8 +1,10 @@
 import { LatLng, Marker as MarkerType } from "leaflet";
 import { useMemo, useRef, type FC } from "react";
 import { Marker, Popup } from "react-leaflet";
+import { createMarkerIcon } from "./markerIcon";
 import "leaflet.utm";
 import "./marker.css";
+import { useTheme } from "@mui/material";
 
 interface CustomMarkerProps {
   title: string;
@@ -17,6 +19,9 @@ export const CustomMarker: FC<CustomMarkerProps> = ({
   setPosition,
   onDrag,
 }) => {
+  const { palette } = useTheme();
+  const icon = createMarkerIcon(palette.primary.main);
+
   const markerRef = useRef(null);
 
   const eventHandlers = useMemo(
@@ -39,6 +44,7 @@ export const CustomMarker: FC<CustomMarkerProps> = ({
       position={position}
       eventHandlers={eventHandlers}
       ref={markerRef}
+      icon={icon}
     >
       <Popup className="custom-popup">
         <h3 className="popup-title">{title}</h3>

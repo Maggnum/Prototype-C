@@ -4,7 +4,7 @@ export const darkTheme = createTheme({
   palette: {
     mode: "dark",
     primary: {
-      main: "#ff9800", // orange accent
+      main: "#ff9800",
     },
     background: {
       default: "#0f0f0f",
