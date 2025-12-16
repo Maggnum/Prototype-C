@@ -10,7 +10,7 @@ import {
 } from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { type FC } from "react";
-import { MapUrl } from "./MapUrl";
+import { MapUrl } from "./mapUrl";
 
 const drawerStyle: SxProps = {
   width: "18vw",

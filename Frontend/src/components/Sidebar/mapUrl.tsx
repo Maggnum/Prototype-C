@@ -11,10 +11,10 @@ import {
   type SxProps,
 } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
-import { ScrollingText } from "../Common/ScrollingText";
 import { useSetAtom } from "jotai";
-import { chosenUrl } from "../../states/mapAtoms";
-import mapProviders from "../../config/mapProviders.json";
+import { chosenUrl } from "@/states";
+import { ScrollingText } from "@/components/Common";
+import mapProviders from "@/config/mapProviders.json";
 
 interface MapSource {
   name: string;

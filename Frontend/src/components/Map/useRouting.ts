@@ -1,8 +1,8 @@
 import type { LatLng, LatLngExpression } from "leaflet";
 import { useCallback, useEffect, useState } from "react";
-import { fetchRoute } from "../../services";
-import { toast } from "react-toastify";
 import axios, { AxiosError, HttpStatusCode } from "axios";
+import { toast } from "react-toastify";
+import { fetchRoute } from "@/services";
 
 type RouteRequest = {
   origin: LatLng;

@@ -1,10 +1,10 @@
 import type { FC } from "react";
-import { MapView } from "./components/MapView/mapView";
+import { Box, CssBaseline, ThemeProvider } from "@mui/material";
 import { ToastContainer } from "react-toastify";
 
-import { Box, CssBaseline, ThemeProvider } from "@mui/material";
-import { Sidebar } from "./components/Sidebar/Sidebar";
-import { darkTheme } from "./components/Theme/darkTheme";
+import { Map } from "@/components/Map";
+import { Sidebar } from "@/components/Sidebar";
+import { darkTheme } from "@/components/Theme";
 
 export const App: FC = () => {
   return (
@@ -14,7 +14,7 @@ export const App: FC = () => {
         <Sidebar />
 
         <Box flex={1} height="100vh">
-          <MapView />
+          <Map />
         </Box>
       </Box>
       <ToastContainer />

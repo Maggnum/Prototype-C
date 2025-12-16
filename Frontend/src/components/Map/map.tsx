@@ -1,14 +1,15 @@
-import "./mapView.css";
+import "./map.css";
 import "leaflet/dist/leaflet.css";
 
 import { useState, type FC } from "react";
 import { LatLng, type LatLngExpression, type PathOptions } from "leaflet";
 import { MapContainer, Polyline, TileLayer } from "react-leaflet";
-import { CustomMarker } from "../Marker/marker";
-import { useRouting } from "./useRouting";
 import { Button, type SxProps } from "@mui/material";
 import { useAtomValue } from "jotai";
-import { chosenUrl } from "../../states/mapAtoms";
+
+import { CustomMarker } from "@/components/Marker";
+import { chosenUrl } from "@/states";
+import { useRouting } from "./useRouting";
 
 const ISRAEL_COORDINATES: LatLngExpression = { lat: 31.4, lng: 35.8216 };
 const MAP_ZOOM = 8;
@@ -32,7 +33,7 @@ const buttonStyle: SxProps = {
   },
 };
 
-export const MapView: FC = () => {
+export const Map: FC = () => {
   const [origin, setOrigin] = useState<LatLng>(new LatLng(31.4064, 34.8513));
   const [destination, setDestination] = useState<LatLng>(
     new LatLng(32.0771, 34.7844)
