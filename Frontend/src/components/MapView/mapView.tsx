@@ -7,8 +7,10 @@ import { MapContainer, Polyline, TileLayer } from "react-leaflet";
 import { CustomMarker } from "../Marker/marker";
 import { useRouting } from "./useRouting";
 import { Button, type SxProps } from "@mui/material";
+import { useAtomValue } from "jotai";
+import { chosenUrl } from "../../states/mapAtoms";
 
-const ISRAEL_COORDINATES: LatLngExpression = { lat: 31.35, lng: 36.1216 };
+const ISRAEL_COORDINATES: LatLngExpression = { lat: 31.4, lng: 35.8216 };
 const MAP_ZOOM = 8;
 
 const PATH_OPTIONS: PathOptions = {
@@ -37,10 +39,11 @@ export const MapView: FC = () => {
   );
 
   const { polyline, clearRoute, route, loading } = useRouting();
+  const mapUrl = useAtomValue(chosenUrl);
 
   return (
     <MapContainer center={ISRAEL_COORDINATES} zoom={MAP_ZOOM}>
-      <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
+      <TileLayer url={mapUrl} />
       <CustomMarker
         title="origin"
         position={origin}

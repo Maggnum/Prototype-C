@@ -1,0 +1,18 @@
+[
+  {
+    "name": "OpenStreetMap",
+    "url": "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+  },
+  {
+    "name": "OpenStreetMap – Humanitarian",
+    "url": "https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png"
+  },
+  {
+    "name": "CartoDB Dark Matter",
+    "url": "https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png"
+  },
+  {
+    "name": "OpenTopoMap",
+    "url": "https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png"
+  }
+]

@@ -8,23 +8,34 @@ import {
   TextField,
   IconButton,
   Typography,
+  type SxProps,
 } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
-import { ScrollingText } from "../ScrollingText";
+import { ScrollingText } from "../Common/ScrollingText";
+import { useSetAtom } from "jotai";
+import { chosenUrl } from "../../states/mapAtoms";
+import mapProviders from "../../config/mapProviders.json";
 
 interface MapSource {
   name: string;
   url: string;
 }
 
-export const MapUrl: FC = () => {
-  const [sources, setSources] = useState<MapSource[]>([
-    {
-      name: "OpenStreetMap",
-      url: "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
-    },
-  ]);
+const radioStyle: SxProps = {
+  alignItems: "flex-start",
+  mb: 1,
+  width: "100%",
+  maxWidth: "100%",
+  overflow: "hidden",
+  "& .MuiFormControlLabel-label": {
+    width: "100%",
+    minWidth: 0,
+  },
+};
 
+export const MapUrl: FC = () => {
+  const setChosenUrl = useSetAtom(chosenUrl);
+  const [sources, setSources] = useState<MapSource[]>(mapProviders);
   const [name, setName] = useState("");
   const [url, setUrl] = useState("");
 
@@ -36,23 +47,29 @@ export const MapUrl: FC = () => {
     setUrl("");
   };
 
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) =>
+    setChosenUrl(event.currentTarget.value);
+
   return (
     <Box>
       <FormControl fullWidth>
-        <RadioGroup defaultValue={sources[0].url} name="map-source">
+        <RadioGroup
+          defaultValue={sources[0].url}
+          name="map-source"
+          onChange={handleChange}
+        >
           {sources.map((source) => (
             <FormControlLabel
               key={source.url}
               value={source.url}
               control={<Radio size="small" />}
-              sx={{ alignItems: "flex-start", mb: 1, width: "100px" }}
+              sx={radioStyle}
               label={
                 <Box>
                   <Typography variant="body2" fontWeight={500}>
                     {source.name}
                   </Typography>
                   <Typography
-                    sx={{ width: "65%" }}
                     variant="caption"
                     color="text.secondary"
                     component="div"

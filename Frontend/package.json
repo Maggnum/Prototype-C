@@ -16,6 +16,7 @@
     "@mui/material": "^7.3.6",
     "@types/leaflet.utm": "^0.0.5",
     "axios": "^1.13.2",
+    "jotai": "^2.16.0",
     "leaflet": "^1.9.4",
     "leaflet.utm": "^1.0.0",
     "react": "^19.2.0",
