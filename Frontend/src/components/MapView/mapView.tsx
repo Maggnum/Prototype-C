@@ -2,8 +2,9 @@ import "./mapView.css";
 import "leaflet/dist/leaflet.css";
 
 import type { FC } from "react";
-import { type LatLngExpression } from "leaflet";
-import { MapContainer, Marker, TileLayer } from "react-leaflet";
+import { LatLng, type LatLngExpression } from "leaflet";
+import { MapContainer, TileLayer } from "react-leaflet";
+import { Waypoint } from "../Waypoint/waypoint";
 
 const ISRAEL_COORDINATES: LatLngExpression = { lat: 31.4061, lng: 34.8516 };
 const MAP_ZOOM = 8;
@@ -15,14 +16,14 @@ export const MapView: FC = () => {
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
       />
-      <Marker
-        draggable={true}
-        position={{ lat: 31.4064, lng: 34.8513 }}
-      ></Marker>
-      <Marker
-        draggable={true}
-        position={{ lat: 32.0771, lng: 34.7844 }}
-      ></Marker>
+      <Waypoint
+        title="marker-1"
+        initialPosition={new LatLng(31.4064, 34.8513)}
+      />
+      <Waypoint
+        title="marker-2"
+        initialPosition={new LatLng(32.0771, 34.7844)}
+      />
     </MapContainer>
   );
 };
