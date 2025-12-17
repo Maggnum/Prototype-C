@@ -16,10 +16,10 @@ import { useRouting } from "../Map/useRouting";
 import { Waypoints } from "./waypoints";
 
 const drawerStyle: SxProps = {
-  width: "18vw",
+  width: "22vw",
   flexShrink: 0,
   "& .MuiDrawer-paper": {
-    width: "20vw",
+    width: "22vw",
     boxSizing: "border-box",
     backgroundColor: "background.paper",
   },
