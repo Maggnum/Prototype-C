@@ -7,7 +7,7 @@ class LatLng(BaseModel):
     lng: float
 
     def to_lng_lat(self) -> Tuple[float, float]:
-        return self.lng, self.lat  #openrouteservice uses LngLat
+        return self.lng, self.lat  # openrouteservice uses LngLat
 
 
 class DirectionsRequest(BaseModel):
