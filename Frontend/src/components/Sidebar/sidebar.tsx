@@ -13,12 +13,13 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { type FC } from "react";
 import { MapUrl } from "./mapUrl";
 import { useRouting } from "../Map/useRouting";
+import { Waypoints } from "./waypoints";
 
 const drawerStyle: SxProps = {
   width: "18vw",
   flexShrink: 0,
   "& .MuiDrawer-paper": {
-    width: "18vw",
+    width: "20vw",
     boxSizing: "border-box",
     backgroundColor: "background.paper",
   },
@@ -58,6 +59,15 @@ export const Sidebar: FC = () => {
             </AccordionSummary>
             <AccordionDetails>
               <MapUrl />
+            </AccordionDetails>
+          </Accordion>
+
+          <Accordion disableGutters>
+            <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+              <Typography fontWeight={500}>Waypoints</Typography>
+            </AccordionSummary>
+            <AccordionDetails>
+              <Waypoints />
             </AccordionDetails>
           </Accordion>
         </Box>
