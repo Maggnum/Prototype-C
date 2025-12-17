@@ -9,8 +9,7 @@ class LatLng(BaseModel):
         return self.lng, self.lat #openrouteservice uses LngLat
 
 class DirectionsRequest(BaseModel):
-    origin: LatLng
-    destination: LatLng
+    waypoints: List[LatLng]
 
 class DirectionsResponse(BaseModel):
     polyline: List[List[float]]
