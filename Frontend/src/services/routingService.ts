@@ -7,10 +7,9 @@ const api = axios.create({
 });
 
 export const fetchRoute = async (
-  origin: LatLng,
-  destination: LatLng
+  waypoints: LatLng[]
 ): Promise<LatLngExpression[]> => {
-  const { data } = await api.post("/directions", { origin, destination });
+  const { data } = await api.post("/directions", { waypoints });
 
   return data.polyline;
 };
