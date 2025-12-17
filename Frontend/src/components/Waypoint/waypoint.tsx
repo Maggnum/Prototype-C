@@ -2,7 +2,7 @@ import { LatLng, Marker as LeafletMarker } from "leaflet";
 import { useMemo, useRef, useState, type FC } from "react";
 import { Marker, Popup } from "react-leaflet";
 import "leaflet.utm";
-import "./marker.css";
+import "./waypoint.css";
 
 interface WaypointProps {
   title: string;
