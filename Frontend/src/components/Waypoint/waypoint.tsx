@@ -1,27 +1,24 @@
-import { LatLng, Marker as MarkerType } from "leaflet";
+import { LatLng, Marker as LeafletMarker } from "leaflet";
 import { useMemo, useRef, useState, type FC } from "react";
 import { Marker, Popup } from "react-leaflet";
 import "leaflet.utm";
 import "./marker.css";
 
-interface CustomMarkerProps {
+interface WaypointProps {
   title: string;
   initialPosition: LatLng;
 }
 
-export const CustomMarker: FC<CustomMarkerProps> = ({
-  title,
-  initialPosition,
-}) => {
+export const Waypoint: FC<WaypointProps> = ({ title, initialPosition }) => {
   const [position, setPosition] = useState<LatLng>(initialPosition);
-  const markerRef = useRef(null);
+  const waypointRef = useRef<LeafletMarker>(null);
 
   const eventHandlers = useMemo(
     () => ({
       dragend() {
-        const marker = markerRef.current;
-        if (marker != null) {
-          setPosition((marker as MarkerType).getLatLng());
+        const waypoint = waypointRef.current;
+        if (waypoint != null) {
+          setPosition(waypoint.getLatLng());
         }
       },
     }),
@@ -33,7 +30,7 @@ export const CustomMarker: FC<CustomMarkerProps> = ({
       draggable={true}
       position={position}
       eventHandlers={eventHandlers}
-      ref={markerRef}
+      ref={waypointRef}
     >
       <Popup className="custom-popup">
         <h3 className="popup-title">{title}</h3>

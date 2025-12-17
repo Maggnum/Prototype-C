@@ -1,0 +1,23 @@
+.custom-popup .popup-title {
+  margin: 0 0 6px 0;
+  font-size: 1.1rem;
+  color: #e0e0e0;
+  font-weight: 600;
+}
+
+.custom-popup .popup-content {
+  color: #c0c0c0;
+  font-size: 0.9rem;
+  line-height: 1.3rem;
+}
+
+.leaflet-popup-content-wrapper {
+  background: #2a2a2a;
+  color: #fff;
+  border-radius: 8px;
+  border: 1px solid #444;
+}
+
+.leaflet-popup-tip {
+  background: #2a2a2a;
+}
