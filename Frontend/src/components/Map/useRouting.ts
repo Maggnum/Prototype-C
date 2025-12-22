@@ -1,14 +1,21 @@
-import { routeAtom, displayRouteAtom } from "@/states";
+import {
+  avoidPolygonsAtom,
+  routeAtom,
+  routeRequestParamsAtom,
+  waypointsAtom,
+} from "@/states";
 import { AxiosError } from "axios";
 import { useAtomValue, useSetAtom } from "jotai";
 import { useEffect } from "react";
 
 export const useRouting = () => {
   const routeLoadable = useAtomValue(routeAtom);
-  const displayRoute = useSetAtom(displayRouteAtom);
+  const setRouteRequestParams = useSetAtom(routeRequestParamsAtom);
+  const waypoints = useAtomValue(waypointsAtom);
+  const avoidPolygons = useAtomValue(avoidPolygonsAtom);
 
-  const route = () => displayRoute(true);
-  const clearRoute = () => displayRoute(false);
+  const route = () => setRouteRequestParams({ waypoints, avoidPolygons });
+  const clearRoute = () => setRouteRequestParams(null);
 
   useEffect(() => {
     if (routeLoadable.state === "hasError") {
@@ -22,9 +29,8 @@ export const useRouting = () => {
       } else {
         console.error("Failed to fetch route", error);
       }
-      displayRoute(false);
     }
-  }, [routeLoadable, displayRoute]);
+  }, [routeLoadable]);
 
   return {
     polyline: routeLoadable.state === "hasData" ? routeLoadable.data : [],

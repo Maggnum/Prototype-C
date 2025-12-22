@@ -21,6 +21,8 @@ interface MapSource {
   url: string;
 }
 
+const addButtonStyle: SxProps = { mt: 1 };
+
 const radioStyle: SxProps = {
   alignItems: "flex-start",
   mb: 1,
@@ -98,7 +100,7 @@ export const MapUrl: FC = () => {
           onChange={(e) => setUrl(e.target.value)}
           fullWidth
         />
-        <IconButton color="primary" onClick={handleAdd} sx={{ mt: 1 }}>
+        <IconButton color="primary" onClick={handleAdd} sx={addButtonStyle}>
           <AddIcon />
         </IconButton>
       </Box>

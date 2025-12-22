@@ -1,5 +1,8 @@
-from pydantic import BaseModel
 from typing import List, Tuple
+
+from pydantic import BaseModel
+
+from models.geoJSON import PolygonFeature
 
 
 class LatLng(BaseModel):
@@ -12,6 +15,7 @@ class LatLng(BaseModel):
 
 class DirectionsRequest(BaseModel):
     waypoints: List[LatLng]
+    avoidPolygons: List[PolygonFeature]
 
 
 class DirectionsResponse(BaseModel):
