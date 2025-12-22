@@ -11,6 +11,7 @@ import { CustomMarker } from "@/components/Marker";
 import { chosenUrlAtom } from "@/states";
 import { useRouting } from "./useRouting";
 import { useWaypoints } from "@/components/Waypoints";
+import { Polygons } from "@/components/Polygons";
 
 const ISRAEL_COORDINATES: LatLngExpression = { lat: 31.4, lng: 35.8216 };
 const MAP_ZOOM = 8;
@@ -39,6 +40,7 @@ export const Map: FC = () => {
         />
       ))}
       <Polyline positions={polyline} pathOptions={ROUTE_OPTIONS} />
+      <Polygons />
     </MapContainer>
   );
 };
