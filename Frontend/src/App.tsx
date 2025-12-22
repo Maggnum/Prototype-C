@@ -17,7 +17,7 @@ export const App: FC = () => {
           <Map />
         </Box>
       </Box>
-      <ToastContainer />
+      <ToastContainer theme="dark" />
     </ThemeProvider>
   );
 };
