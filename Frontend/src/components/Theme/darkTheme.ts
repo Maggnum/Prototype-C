@@ -6,6 +6,10 @@ export const darkTheme = createTheme({
     primary: {
       main: "#ff9800",
     },
+    error: {
+      main: "#ff3200",
+      light: "#ff6500",
+    },
     background: {
       default: "#0f0f0f",
       paper: "#161616",
