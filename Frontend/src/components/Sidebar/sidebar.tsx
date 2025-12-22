@@ -11,9 +11,10 @@ import {
 } from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { type FC } from "react";
-import { MapUrl } from "./mapUrl";
-import { useRouting } from "../Map/useRouting";
-import { Waypoints } from "./waypoints";
+import { MapUrl } from "@/components/MapUrl";
+import { useRouting } from "@/components/Map";
+import { Waypoints } from "@/components/Waypoints";
+import { PolygonsTable } from "@/components/PolygonsTable";
 
 const drawerStyle: SxProps = {
   width: "22vw",
@@ -68,6 +69,15 @@ export const Sidebar: FC = () => {
             </AccordionSummary>
             <AccordionDetails>
               <Waypoints />
+            </AccordionDetails>
+          </Accordion>
+
+          <Accordion disableGutters>
+            <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+              <Typography fontWeight={500}>Polygons</Typography>
+            </AccordionSummary>
+            <AccordionDetails>
+              <PolygonsTable />
             </AccordionDetails>
           </Accordion>
         </Box>
