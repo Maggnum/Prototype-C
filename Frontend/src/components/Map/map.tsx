@@ -10,7 +10,7 @@ import { useAtomValue } from "jotai";
 import { CustomMarker } from "@/components/Marker";
 import { chosenUrlAtom } from "@/states";
 import { useRouting } from "./useRouting";
-import { useWaypoints } from "./useWaypoints";
+import { useWaypoints } from "@/components/Waypoints";
 
 const ISRAEL_COORDINATES: LatLngExpression = { lat: 31.4, lng: 35.8216 };
 const MAP_ZOOM = 8;
@@ -22,7 +22,7 @@ export const Map: FC = () => {
   const { polyline, clearRoute } = useRouting();
 
   const { palette } = useTheme();
-  const PATH_OPTIONS: PathOptions = {
+  const ROUTE_OPTIONS: PathOptions = {
     color: palette.primary.main,
   };
 
@@ -31,13 +31,14 @@ export const Map: FC = () => {
       <TileLayer url={mapUrl} />
       {waypoints.map((waypoint, index) => (
         <CustomMarker
+          key={index}
           title={`#${index + 1}`}
           position={waypoint}
           setPosition={setWaypoint(index)}
           onDrag={clearRoute}
         />
       ))}
-      <Polyline positions={polyline} pathOptions={PATH_OPTIONS} />
+      <Polyline positions={polyline} pathOptions={ROUTE_OPTIONS} />
     </MapContainer>
   );
 };
