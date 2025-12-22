@@ -1,5 +1,10 @@
-import { TextField, Typography } from "@mui/material";
+import { TextField, Typography, type SxProps } from "@mui/material";
 import { useState, type FC } from "react";
+
+const typographyStyle: SxProps = {
+  cursor: "pointer",
+  "&:hover": { textDecoration: "underline" },
+};
 
 interface editInlineTextProps {
   initialValue: string;
@@ -40,14 +45,7 @@ export const EditInlineText: FC<editInlineTextProps> = ({
       }}
     />
   ) : (
-    <Typography
-      variant="body2"
-      sx={{
-        cursor: "pointer",
-        "&:hover": { textDecoration: "underline" },
-      }}
-      onClick={startEditing}
-    >
+    <Typography variant="body2" sx={typographyStyle} onClick={startEditing}>
       {draft}
     </Typography>
   );

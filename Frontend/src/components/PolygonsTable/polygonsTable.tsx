@@ -37,6 +37,15 @@ const modalStyle: SxProps = {
   borderRadius: 2,
 };
 
+const deleteIconStyle: SxProps = {
+  opacity: 0,
+  transition: "opacity 0.15s",
+};
+
+const rowStyle: SxProps = {
+  "&:hover .row-actions": { opacity: 1 },
+};
+
 export const PolygonsTable: FC = () => {
   const { polygons, deletePolygon, editPolygonName, markPolygon } =
     usePolygonsControl();
@@ -96,9 +105,7 @@ export const PolygonsTable: FC = () => {
                 <TableRow
                   key={polygon.id ?? index}
                   hover
-                  sx={{
-                    "&:hover .row-actions": { opacity: 1 },
-                  }}
+                  sx={rowStyle}
                   onMouseEnter={() => markPolygon(`${polygon.id}`)}
                   onMouseLeave={() => markPolygon(undefined)}
                 >
@@ -114,10 +121,7 @@ export const PolygonsTable: FC = () => {
                       size="small"
                       className="row-actions"
                       onClick={deletePolygon(polygon.id as string)}
-                      sx={{
-                        opacity: 0,
-                        transition: "opacity 0.15s",
-                      }}
+                      sx={deleteIconStyle}
                       disabled={useMapEdit}
                     >
                       <DeleteIcon fontSize="inherit" />

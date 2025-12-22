@@ -1,6 +1,11 @@
 import { Box, Typography, type SxProps } from "@mui/material";
 import { type FC, useLayoutEffect, useRef, useState } from "react";
 
+const textContainerStyle: SxProps = {
+  overflow: "hidden",
+  whiteSpace: "nowrap",
+};
+
 export const ScrollingText: FC<{ text: string }> = ({ text }) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const textRef = useRef<HTMLDivElement>(null);
@@ -29,13 +34,7 @@ export const ScrollingText: FC<{ text: string }> = ({ text }) => {
   }, [text]);
 
   return (
-    <Box
-      ref={containerRef}
-      sx={{
-        overflow: "hidden",
-        whiteSpace: "nowrap",
-      }}
-    >
+    <Box ref={containerRef} sx={textContainerStyle}>
       <Typography ref={textRef} component="div" sx={textStyle}>
         {text}
       </Typography>

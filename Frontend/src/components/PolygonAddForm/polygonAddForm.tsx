@@ -11,6 +11,7 @@ import {
   Typography,
   Button,
   Stack,
+  type SxProps,
 } from "@mui/material";
 import { useState, type FC } from "react";
 
@@ -18,6 +19,22 @@ import DeleteIcon from "@mui/icons-material/DeleteOutline";
 import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
 import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
 import { usePolygonsControl } from "@/components/PolygonsTable";
+
+const secondaryHeaderStyle: SxProps = { whiteSpace: "nowrap" };
+
+const buttonsCellStyle: SxProps = {
+  opacity: 0,
+  transition: "opacity 0.15s",
+  display: "flex",
+  gap: 0.5,
+  justifyContent: "flex-end",
+};
+
+const rowStyle: SxProps = {
+  "&:hover .row-actions": { opacity: 1 },
+};
+
+const addButtonStyle: SxProps = { mt: 1 };
 
 export const PolygonAddForm: FC = () => {
   const { addPolygon } = usePolygonsControl();
@@ -55,7 +72,7 @@ export const PolygonAddForm: FC = () => {
           <Typography
             variant="caption"
             color="text.secondary"
-            sx={{ whiteSpace: "nowrap" }}
+            sx={secondaryHeaderStyle}
           >
             Minimum 3 vertices required
           </Typography>
@@ -92,27 +109,12 @@ export const PolygonAddForm: FC = () => {
               </TableRow>
             ) : (
               coordinates.map((coords, index) => (
-                <TableRow
-                  key={index}
-                  hover
-                  sx={{
-                    "&:hover .row-actions": { opacity: 1 },
-                  }}
-                >
+                <TableRow key={index} hover sx={rowStyle}>
                   <TableCell>{index + 1}</TableCell>
                   <TableCell>{coords[0].toFixed(6)}</TableCell>
                   <TableCell>{coords[1].toFixed(6)}</TableCell>
                   <TableCell align="right">
-                    <Box
-                      className="row-actions"
-                      sx={{
-                        opacity: 0,
-                        transition: "opacity 0.15s",
-                        display: "flex",
-                        gap: 0.5,
-                        justifyContent: "flex-end",
-                      }}
-                    >
+                    <Box className="row-actions" sx={buttonsCellStyle}>
                       <IconButton
                         size="small"
                         disabled={index === 0}
@@ -163,7 +165,7 @@ export const PolygonAddForm: FC = () => {
           variant="contained"
           disabled={coordinates.length < 3 || !name}
           fullWidth
-          sx={{ mt: 1 }}
+          sx={addButtonStyle}
           onClick={() => addPolygon(name, coordinates)}
         >
           Add polygon
