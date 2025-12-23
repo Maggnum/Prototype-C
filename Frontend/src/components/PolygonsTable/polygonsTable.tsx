@@ -18,13 +18,17 @@ import {
 
 import AddIcon from "@mui/icons-material/Add";
 import DeleteIcon from "@mui/icons-material/DeleteOutline";
+import EditIcon from "@mui/icons-material/Edit";
 import EditLocationAltIcon from "@mui/icons-material/EditLocationAlt";
+import OpenWithIcon from "@mui/icons-material/OpenWith";
+import Rotate90DegreesCcwIcon from "@mui/icons-material/Rotate90DegreesCcw";
 
 import { usePolygonsControl } from "./usePolygonsControl";
 import { MapMode } from "@/models";
-import { useMapMode } from "./useMapMode";
 import { PolygonAddForm } from "@/components/PolygonAddForm";
 import { EditInlineText } from "@/components/Common";
+import { useAtom } from "jotai";
+import { mapModeAtom } from "@/states";
 
 const modalStyle: SxProps = {
   position: "absolute",
@@ -51,7 +55,10 @@ export const PolygonsTable: FC = () => {
     usePolygonsControl();
   const [useMapEdit, setUseMapEdit] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const setMapMode = useMapMode();
+  const [mapMode, setMapMode] = useAtom(mapModeAtom);
+
+  const switchMapMode = (mapModeToSwitch: MapMode) =>
+    setMapMode(mapMode === mapModeToSwitch ? MapMode.DEAFULT : mapModeToSwitch);
 
   return (
     <>
@@ -138,16 +145,34 @@ export const PolygonsTable: FC = () => {
         {useMapEdit ? (
           <>
             <IconButton
-              color="primary"
-              onClick={() => setMapMode(MapMode.DRAW)}
+              color={mapMode === MapMode.DRAW ? "error" : "primary"}
+              onClick={() => switchMapMode(MapMode.DRAW)}
             >
               <EditLocationAltIcon />
             </IconButton>
             <IconButton
-              color="primary"
-              onClick={() => setMapMode(MapMode.DELETE)}
+              color={mapMode === MapMode.DELETE ? "error" : "primary"}
+              onClick={() => switchMapMode(MapMode.DELETE)}
             >
               <DeleteIcon />
+            </IconButton>
+            <IconButton
+              color={mapMode === MapMode.EDIT ? "error" : "primary"}
+              onClick={() => switchMapMode(MapMode.EDIT)}
+            >
+              <EditIcon />
+            </IconButton>
+            <IconButton
+              color={mapMode === MapMode.DRAG ? "error" : "primary"}
+              onClick={() => switchMapMode(MapMode.DRAG)}
+            >
+              <OpenWithIcon />
+            </IconButton>
+            <IconButton
+              color={mapMode === MapMode.ROTATE ? "error" : "primary"}
+              onClick={() => switchMapMode(MapMode.ROTATE)}
+            >
+              <Rotate90DegreesCcwIcon />
             </IconButton>
           </>
         ) : (
