@@ -27,13 +27,19 @@ export const useGeoMan = () => {
           map.pm.disableGlobalRemovalMode();
           break;
         case MapMode.EDIT:
-          map.pm.disableGlobalEditMode();
+          map.eachLayer((layer) => {
+            if (layer instanceof leafletPolygon) layer.pm.disable();
+          });
           break;
         case MapMode.ROTATE:
-          map.pm.disableGlobalRotateMode();
+          map.eachLayer((layer) => {
+            if (layer instanceof leafletPolygon) layer.pm.disableRotate();
+          });
           break;
         case MapMode.DRAG:
-          map.pm.disableGlobalDragMode();
+          map.eachLayer((layer) => {
+            if (layer instanceof leafletPolygon) layer.pm.disableLayerDrag();
+          });
           break;
         default:
           break;
@@ -55,7 +61,9 @@ export const useGeoMan = () => {
         break;
       case MapMode.EDIT:
         resetMode();
-        map.pm.enableGlobalEditMode();
+        map.eachLayer((layer) => {
+          if (layer instanceof leafletPolygon) layer.pm.enable();
+        });
         break;
       case MapMode.ROTATE:
         resetMode();
@@ -65,14 +73,16 @@ export const useGeoMan = () => {
         break;
       case MapMode.DRAG:
         resetMode();
-        map.pm.enableGlobalDragMode();
+        map.eachLayer((layer) => {
+          if (layer instanceof leafletPolygon) layer.pm.enableLayerDrag();
+        });
         break;
       default:
         break;
     }
   }, [map, mapMode]);
 
-  // GeoMap events
+  // GeoMap map events
   useEffect(() => {
     const onCreate = ({ layer }: { layer: Layer }) => {
       layer.removeFrom(map);
@@ -94,6 +104,17 @@ export const useGeoMan = () => {
       setMapMode(MapMode.DEAFULT);
     };
 
+    map.on("pm:create", onCreate);
+    map.on("pm:remove", onDelete);
+
+    return () => {
+      map.off("pm:create", onCreate);
+      map.off("pm:remove", onDelete);
+    };
+  }, [map]);
+
+  // GeoMan layer effects
+  useEffect(() => {
     const onEdit = ({ layer }: { layer: Layer }) => {
       const feature = (layer as leafletPolygon).toGeoJSON();
       setPolygons((prev) => {
@@ -102,24 +123,16 @@ export const useGeoMan = () => {
         copy[indexToEdit] = feature;
         return copy;
       });
-
-      setMapMode(MapMode.DEAFULT);
     };
 
-    map.on("pm:create", onCreate);
-    map.on("pm:remove", onDelete);
-    map.on("pm:edit", onEdit);
-    map.on("pm:rotateend", onEdit);
-    map.on("pm:dragend", onEdit);
-
-    return () => {
-      map.off("pm:create", onCreate);
-      map.off("pm:remove", onDelete);
-      map.off("pm:edit", onEdit);
-      map.off("pm:rotateend", onEdit);
-      map.off("pm:dragend", onEdit);
-    };
-  }, [map]);
+    map.eachLayer((layer) => {
+      if (layer instanceof leafletPolygon) {
+        layer.on("pm:dragend", onEdit);
+        layer.on("pm:rotateend", onEdit);
+        layer.on("pm:edit", onEdit);
+      }
+    });
+  }, [map, polygons]);
 
   return { polygons };
 };
