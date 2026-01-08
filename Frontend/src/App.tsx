@@ -1,12 +1,23 @@
 import type { FC } from "react";
-import { MapView } from "./components/MapView/mapView";
+import { Box, CssBaseline, ThemeProvider } from "@mui/material";
 import { ToastContainer } from "react-toastify";
+
+import { Map } from "@/components/Map";
+import { Sidebar } from "@/components/Sidebar";
+import { darkTheme } from "@/components/Theme";
 
 export const App: FC = () => {
   return (
-    <>
-      <MapView />
+    <ThemeProvider theme={darkTheme}>
+      <CssBaseline />
+      <Box display="flex">
+        <Sidebar />
+
+        <Box flex={1} height="100vh">
+          <Map />
+        </Box>
+      </Box>
       <ToastContainer />
-    </>
+    </ThemeProvider>
   );
 };
