@@ -9,7 +9,7 @@ import { useTheme } from "@mui/material";
 interface CustomMarkerProps {
   title: string;
   position: LatLng;
-  setPosition: React.Dispatch<React.SetStateAction<LatLng>>;
+  setPosition: (position: LatLng) => void;
   onDrag?: () => void;
 }
 

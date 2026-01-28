@@ -6,6 +6,7 @@ from services.routing_service import get_route
 
 router = APIRouter()
 
+
 @router.post("/directions", response_model=DirectionsResponse)
 def directions_endpoint(req: DirectionsRequest):
     try:
