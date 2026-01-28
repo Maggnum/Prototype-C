@@ -1,4 +1,6 @@
 import "@geoman-io/leaflet-geoman-free";
+import "@geoman-io/leaflet-geoman-free/dist/leaflet-geoman.css";
+
 import { mapModeAtom, avoidPolygonsAtom } from "@/states";
 import { useAtom } from "jotai";
 import { useMap } from "react-leaflet";
@@ -24,6 +26,21 @@ export const useGeoMan = () => {
         case MapMode.DELETE:
           map.pm.disableGlobalRemovalMode();
           break;
+        case MapMode.EDIT:
+          map.eachLayer((layer) => {
+            if (layer instanceof leafletPolygon) layer.pm.disable();
+          });
+          break;
+        case MapMode.ROTATE:
+          map.eachLayer((layer) => {
+            if (layer instanceof leafletPolygon) layer.pm.disableRotate();
+          });
+          break;
+        case MapMode.DRAG:
+          map.eachLayer((layer) => {
+            if (layer instanceof leafletPolygon) layer.pm.disableLayerDrag();
+          });
+          break;
         default:
           break;
       }
@@ -42,12 +59,30 @@ export const useGeoMan = () => {
         resetMode();
         map.pm.enableGlobalRemovalMode();
         break;
+      case MapMode.EDIT:
+        resetMode();
+        map.eachLayer((layer) => {
+          if (layer instanceof leafletPolygon) layer.pm.enable();
+        });
+        break;
+      case MapMode.ROTATE:
+        resetMode();
+        map.eachLayer((layer) => {
+          if (layer instanceof leafletPolygon) layer.pm.enableRotate();
+        });
+        break;
+      case MapMode.DRAG:
+        resetMode();
+        map.eachLayer((layer) => {
+          if (layer instanceof leafletPolygon) layer.pm.enableLayerDrag();
+        });
+        break;
       default:
         break;
     }
   }, [map, mapMode]);
 
-  // GeoMap events
+  // GeoMap map events
   useEffect(() => {
     const onCreate = ({ layer }: { layer: Layer }) => {
       layer.removeFrom(map);
@@ -77,6 +112,27 @@ export const useGeoMan = () => {
       map.off("pm:remove", onDelete);
     };
   }, [map]);
+
+  // GeoMan layer effects
+  useEffect(() => {
+    const onEdit = ({ layer }: { layer: Layer }) => {
+      const feature = (layer as leafletPolygon).toGeoJSON();
+      setPolygons((prev) => {
+        const indexToEdit = prev.findIndex(({ id }) => id === feature.id);
+        const copy = [...prev];
+        copy[indexToEdit] = feature;
+        return copy;
+      });
+    };
+
+    map.eachLayer((layer) => {
+      if (layer instanceof leafletPolygon) {
+        layer.on("pm:dragend", onEdit);
+        layer.on("pm:rotateend", onEdit);
+        layer.on("pm:edit", onEdit);
+      }
+    });
+  }, [map, polygons]);
 
   return { polygons };
 };
